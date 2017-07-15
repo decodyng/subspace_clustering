@@ -3,27 +3,10 @@ import numpy as np
 import pandas as pd
 
 
-## The goal of this calculation is to create an object that can do a few generic types of calculations necessary for aggregation along both 
+## The goal of this class is to create an object that can do a few generic types of calculations necessary for aggregation along both
 ## feature dimensions and time, and track its changes. This is also designed to make it easy to re-load and re-do calculations from fixed points 
 
 #A better name would really be "TimeSeriesPipeline"
-
-def deviation_calc(sr, obs_col='routing_percentage', mean_col='rolling_mean_twenty_five', stdev_col='rolling_stdev_twenty_five'):
-    obs_perc = sr[obs_col]
-    mn = sr[mean_col]
-    sd = sr[stdev_col]
-    if obs_perc == 0:
-        return 0
-    if pd.isnull(mn) or mn == 0 or pd.isnull(sd) or sd == 0:
-        return np.nan
-    else:
-        return (obs_perc - mn)/sd
-
-
-def idiotic_week_ts_conversion(ts_tup):
-    st_tup = str(ts_tup) + '1'
-    return pd.to_datetime(st_tup, format='(%Y, %U)%w')
-
 
 class DimensionalPipeline(object):
     #We initialize a DimensionalPipeline object with an initial dataframe, a name (that also doubles as a path), and a boolean for should_save
